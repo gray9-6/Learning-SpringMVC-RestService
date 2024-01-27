@@ -8,10 +8,62 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
+
 @Service
 @Slf4j
 public class BeerServiceImplementation implements BeerService {
+
+    private Map<UUID,Beer> beerMap;
+
+    public BeerServiceImplementation() {
+        beerMap = new HashMap<>();
+
+        Beer beer1 = Beer.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .beerName("Tuborg")
+                .beerStyle(BeerStyle.LARGER)
+                .upc("12345")
+                .price(new BigDecimal("12.99"))
+                .quantityOnHand(122)
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .build();
+
+        Beer beer2 = Beer.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .beerName("Karlsberg")
+                .beerStyle(BeerStyle.LARGER)
+                .upc("123456222")
+                .price(new BigDecimal("11.99"))
+                .quantityOnHand(392)
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .build();
+
+        Beer beer3 = Beer.builder()
+                .id(UUID.randomUUID())
+                .version(1)
+                .beerName("KingFisher")
+                .beerStyle(BeerStyle.LARGER)
+                .upc("123456")
+                .price(new BigDecimal("10.99"))
+                .quantityOnHand(132)
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .build();
+
+        beerMap.put(beer1.getId(),beer1);
+        beerMap.put(beer2.getId(),beer2);
+        beerMap.put(beer3.getId(),beer3);
+    }
+
+    @Override
+    public List<Beer> getBeerList(){
+        return new ArrayList<>(beerMap.values());
+    }
 
     @Override
     public Beer getBeerById(UUID id) {
