@@ -14,6 +14,7 @@ import java.util.*;
 @Slf4j
 public class BeerServiceImplementation implements BeerService {
 
+    // this acts like a db
     private Map<UUID,Beer> beerMap;
 
     public BeerServiceImplementation() {
@@ -80,5 +81,23 @@ public class BeerServiceImplementation implements BeerService {
                 .createdDate(LocalDateTime.now())
                 .updatedDate(LocalDateTime.now())
                 .build();
+    }
+
+    @Override
+    public Beer addBeer(Beer beer) {
+        Beer savedBeer = Beer.builder()
+                .id(UUID.randomUUID())
+                .beerStyle(beer.getBeerStyle())
+                .beerName(beer.getBeerName())
+                .version(beer.getVersion())
+                .updatedDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
+                .quantityOnHand(beer.getQuantityOnHand())
+                .price(beer.getPrice())
+                .upc(beer.getUpc())
+                .build();
+
+        beerMap.put(savedBeer.getId(),savedBeer);
+        return savedBeer;
     }
 }
