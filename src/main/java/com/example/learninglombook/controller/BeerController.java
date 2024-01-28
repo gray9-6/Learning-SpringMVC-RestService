@@ -4,6 +4,7 @@ import com.example.learninglombook.model.Beer;
 import com.example.learninglombook.service.BeerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,11 @@ public class BeerController {
 //    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity addBeer(@RequestBody Beer beer){
         Beer savedBeer = beerService.addBeer(beer);
-        return new ResponseEntity<>("created",HttpStatus.CREATED);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location","/api/v1/beer/getBeerById/" + savedBeer.getId().toString());
+//        return new ResponseEntity<>("created",HttpStatus.CREATED);
+        return new ResponseEntity<>(headers ,HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET)
