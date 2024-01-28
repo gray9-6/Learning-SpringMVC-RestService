@@ -19,7 +19,7 @@ public class BeerController {
     private final BeerService beerService;
 
 
-    @RequestMapping()
+    @RequestMapping(method = RequestMethod.GET)
     public List<Beer> getBeerList(){
         log.debug("getting all the beer list in controller");
         return beerService.getBeerList();
