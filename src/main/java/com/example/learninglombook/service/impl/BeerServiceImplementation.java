@@ -70,17 +70,7 @@ public class BeerServiceImplementation implements BeerService {
     public Beer getBeerById(UUID id) {
         log.debug("Get Beer id in the service layer - " +id.toString() );
 
-        return Beer.builder()
-                .id(id)
-                .version(1)
-                .beerName("Tuborg")
-                .beerStyle(BeerStyle.LARGER)
-                .upc("12345")
-                .price(new BigDecimal("12.99"))
-                .quantityOnHand(122)
-                .createdDate(LocalDateTime.now())
-                .updatedDate(LocalDateTime.now())
-                .build();
+        return beerMap.get(id);
     }
 
     @Override
@@ -99,5 +89,18 @@ public class BeerServiceImplementation implements BeerService {
 
         beerMap.put(savedBeer.getId(),savedBeer);
         return savedBeer;
+    }
+
+    @Override
+    public void updateBeerById(UUID beerId, Beer beer) {
+        Beer existingBeer = beerMap.get(beerId);
+        existingBeer.setBeerName(beer.getBeerName());
+        existingBeer.setBeerStyle(beer.getBeerStyle());
+        existingBeer.setPrice(beer.getPrice());
+        existingBeer.setUpc(beer.getUpc());
+        existingBeer.setQuantityOnHand(beer.getQuantityOnHand());
+        existingBeer.setUpdatedDate(LocalDateTime.now());
+
+        beerMap.put(existingBeer.getId(),existingBeer);
     }
 }
